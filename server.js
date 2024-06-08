@@ -17,7 +17,7 @@ app.set('view engine', 'ejs');
 app.set('views', 'views');
 app.set()
 
-app.get("/ejs", (req, res) => {
+app.get("/", (req, res) => {
   res.render('index', { 
     title: 'Posts',
     message: 'Hello from EJS!'
