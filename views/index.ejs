@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= title %></title>
+  </head>
+  <body>
+    <%- include('./header.ejs') %>
+    <h1>Add Posts</h1>
+    <form id="add-post">
+      <label for="title">Title</label>
+      <input type="text" name="title" id="title" required />
+      <button>Submit</button>
+    </form>
+    <h1>Posts</h1>
+    <button id="button">Get Posts</button>
+    <ul id="posts"></ul>
+    <%- include('./footer.ejs') %>
+  </body>
+  <script>
+    const posts = document.getElementById("posts");
+    const button = document.getElementById("button");
+    const addPostForm = document.getElementById("add-post");
+
+    const url = "http://localhost:8080/api/posts";
+
+    // Get Posts
+    const getPosts = async () => {
+      try {
+        const response = await fetch(url);
+        const data = await response.json();
+        posts.innerHTML = "";
+        data.forEach((post) => {
+          const li = document.createElement("li");
+          li.innerHTML = post.title;
+          posts.append(li);
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    // Add Post
+
+    async function addPost(e) {
+      e.preventDefault();
+      const formData = new FormData(this);
+      const title = formData.get("title");
+      try {
+        const res = await fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ title }),
+        });
+        if (!res.ok) {
+          throw new Error("Something went wrong");
+        }
+        getPosts();
+      } catch (err) {
+        console.log(err);
+      }
+    }
+
+    // Event Listeners
+    button.addEventListener("click", getPosts);
+    addPostForm.addEventListener("submit", addPost);
+  </script>
+</html>
