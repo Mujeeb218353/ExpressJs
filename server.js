@@ -4,6 +4,7 @@ import posts from "./routes/posts.js";
 import logger from "./middleware/logger.js";
 import errorHandler from "./middleware/error.js";
 import notFound from "./middleware/notFound.js";
+import cors from "cors";
 import path from "path";
 import { fileURLToPath } from "url";
 import { query, validationResult, matchedData, body } from "express-validator";
@@ -27,6 +28,9 @@ app.get("/", (req, res) => {
 //Body Parser Middleware
 app.use(express.json()); //allow send raw json ( Returns middleware that only parses json and only looks at requests where the Content-Type header matches the type option. )
 app.use(express.urlencoded({ extended: false })); //Returns middleware that only parses urlencoded bodies and only looks at requests where the Content-Type header matches the type option
+app.use(cors({
+  origin: 'https://express-js-vercel.vercel.app/.vercel.app'
+}));
 
 app.use(express.static(path.join(__dirname, "public")));
 
