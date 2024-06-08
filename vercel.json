@@ -1,5 +1,12 @@
 {
-  "version": 2,
-  "routes": [{ "source": "/(.*)", "destination": "/api" }],
-  "builds": [{ "src": "server.js", "use": "@vercel/node" }]
-}
+    "version": 2,
+    "routes": [
+      { "handle": "filesystem" },
+      {
+        "src": "/api/(.*)",
+        "dest": "server.js"
+      }
+    ],
+    "builds": [{ "src": "server.js", "use": "@vercel/node" }]
+  }
+  
