@@ -29,7 +29,7 @@ app.get("/", (req, res) => {
 app.use(express.json()); //allow send raw json ( Returns middleware that only parses json and only looks at requests where the Content-Type header matches the type option. )
 app.use(express.urlencoded({ extended: false })); //Returns middleware that only parses urlencoded bodies and only looks at requests where the Content-Type header matches the type option
 app.use(cors({
-  origin: 'https://express-js-vercel.vercel.app/.vercel.app'
+  origin: 'https://express-js-vercel.vercel.app'
 }));
 
 app.use(express.static(path.join(__dirname, "public")));
